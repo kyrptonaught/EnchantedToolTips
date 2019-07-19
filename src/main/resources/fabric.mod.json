@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "enchantedtooltips",
+  "version": "1.0.0",
+  "name": "Enchanted ToolTips",
+  "description": "Enhanced, enchantment Tool Tips",
+  "authors": [
+    "kyrptonaught"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/modded-tool-tips",
+    "sources": "https://github.com/kyrptonaught/enchantedtooltips"
+  },
+  "license": "MIT",
+  "icon": "assets/enchantedtooltips/icon.png",
+  "environment": "*",
+  "mixins": [
+    {
+      "config": "net.kyrptonaught.enchantedtooltips.json",
+      "environment": "client"
+    }
+  ],
+  "entrypoints": {
+    "main": [
+      "net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod"
+    ],
+    "client": [
+      "net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod"
+    ]
+  },
+  "requires": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
