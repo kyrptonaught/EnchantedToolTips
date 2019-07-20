@@ -6,6 +6,8 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.metadata.ModMetadata;
+import net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod;
+import net.kyrptonaught.enchantedtooltips.config.EnchantsLookup;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.resource.language.I18n;
@@ -37,7 +39,7 @@ public class ItemMixin {
 	@Inject(at = @At("TAIL"), method = "appendEnchantments")
 	@Environment(EnvType.CLIENT)
 	private static void ETTM2$appendEnchantments(List<Text> list, ListTag enchants, CallbackInfo cli) {
-		if (MinecraftClient.getInstance().currentScreen == null) return;
+		if (MinecraftClient.getInstance().currentScreen == null || enchants.size() == 0) return;
 		if (GLFW.glfwGetKey(MinecraftClient.getInstance().window.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == 0) {
 			String[] msg = I18n.translate("enchantedtooltip.presssneak").split("KEY");
 			Text pre = new LiteralText(msg[0]);
@@ -56,21 +58,27 @@ public class ItemMixin {
 				Identifier enchantID = Identifier.tryParse(enchantTag.getString("id"));
 				Enchantment enchant = Registry.ENCHANTMENT.get(enchantID);
 				//name
-				list.add(new TranslatableText("enchantedtooltip.enchant.name").append(enchant.getName(enchantTag.getInt("lvl"))).formatted(Formatting.GRAY));
+				list.add(enchant.getName(enchantTag.getInt("lvl")).formatted(Formatting.DARK_GREEN));
 				//Level
 				Text maxLvl = new TranslatableText("enchantment.level." + enchant.getMaximumLevel());
 				list.add(new TranslatableText("enchantedtooltip.enchant.maxLevel").append(maxLvl).formatted(Formatting.GRAY));
 				//applies to
-				list.add(new TranslatableText("enchantedtooltip.enchant.applicableTo").append(new TranslatableText("enchantedtooltip.enchant.type."+enchant.type.name())).formatted(Formatting.GRAY));
+				list.add(new TranslatableText("enchantedtooltip.enchant.applicableTo").append(new TranslatableText("enchantedtooltip.enchant.type." + enchant.type.name())).formatted(Formatting.GRAY));
 				//desc
-				list.add(new TranslatableText("enchantment." + enchantTag.getString("id").replace(":", ".") + ".desc").formatted(Formatting.GRAY));
-				//mod
+				list.add(ETTM$getEnchantDesc("enchantment." + enchantTag.getString("id").replace(":", ".") + ".desc").formatted(Formatting.GRAY));
+				//from
 				String mod = enchantID.getNamespace().toLowerCase();
-				mod = FabricLoader.getInstance().getModContainer(mod).map(ModContainer::getMetadata).map(ModMetadata::getName).orElse(mod);
-				list.add(new TranslatableText("enchantedtooltip.enchant.from").formatted(Formatting.GRAY).append(new LiteralText(mod).formatted(Formatting.BLUE, Formatting.ITALIC)));
+				mod = StringUtils.capitalize(FabricLoader.getInstance().getModContainer(mod).map(ModContainer::getMetadata).map(ModMetadata::getName).orElse(mod));
+				list.add(new TranslatableText("enchantedtooltip.enchant.from").formatted(Formatting.GRAY).append(new LiteralText(mod).formatted(Formatting.BLUE)));
 			}
 			cli.cancel();
 			return;
 		}
+	}
+
+	private static Text ETTM$getEnchantDesc(String text) {
+		if (EnchantedToolTipMod.config.enchantsLookup.enchants.containsKey(text))
+			return new LiteralText(EnchantedToolTipMod.config.enchantsLookup.enchants.get(text));
+		return new TranslatableText(text);
 	}
 }

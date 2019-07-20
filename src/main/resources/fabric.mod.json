@@ -26,6 +26,10 @@
     ],
     "client": [
       "net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod"
+    ],
+
+    "modmenu": [
+      "net.kyrptonaught.enchantedtooltips.config.ModMenuIntegration"
     ]
   },
   "requires": {
