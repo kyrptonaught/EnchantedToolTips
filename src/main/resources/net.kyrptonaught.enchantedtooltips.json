@@ -3,7 +3,8 @@
   "package": "net.kyrptonaught.enchantedtooltips.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ItemMixin"
+    "ItemMixin",
+    "EnchantedBookMixin"
   ],
   "injectors": {
     "defaultRequire": 1

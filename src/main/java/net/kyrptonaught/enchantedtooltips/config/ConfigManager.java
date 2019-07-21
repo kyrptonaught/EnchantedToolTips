@@ -21,7 +21,7 @@ public class ConfigManager {
 
     public ConfigManager() {
         File dir = new File(FabricLoader.getInstance().getConfigDirectory() + "/enchantedtooltips");
-        if(!Files.exists(dir.toPath())) {
+        if (!Files.exists(dir.toPath())) {
             try {
                 Files.createDirectories(dir.toPath());
             } catch (IOException e) {
@@ -81,7 +81,8 @@ public class ConfigManager {
         }
         saveConfig();
     }
-    public void saveEnchants(){
+
+    public void saveEnchants() {
         try {
             if (!enchantsFile.exists() && !enchantsFile.createNewFile()) {
                 System.out.println(EnchantedToolTipMod.MOD_ID + " Failed to save config! Overwriting with default config.");
@@ -107,6 +108,7 @@ public class ConfigManager {
             return;
         }
     }
+
     public void loadEnchants() {
         if (!enchantsFile.exists() || !enchantsFile.canRead()) {
             System.out.println(EnchantedToolTipMod.MOD_ID + " Config not found! Creating one.");

@@ -6,5 +6,5 @@ import java.util.HashMap;
 
 public class EnchantsLookup {
     @Comment("The descriptions displayed for enchants")
-    public HashMap<String,String> enchants = new HashMap<>();
+    public HashMap<String, String> enchants = new HashMap<>();
 }

@@ -1,24 +1,21 @@
 package net.kyrptonaught.enchantedtooltips.config;
 
 import blue.endless.jankson.Comment;
-import net.minecraft.client.util.InputUtil;
-import org.lwjgl.glfw.GLFW;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 public class ConfigOptions {
 
     @Comment("Should the enchant info be displayed on enchanted book")
-    public boolean enableForBookS = true;
+    public boolean enableForBooks = true;
     @Comment("Should the enchant info be displayed on enchanted tools")
     public boolean enableForItems = true;
 
-    public boolean diaplyDesc = true;
+    @Comment("Display 'Description' in tooltip")
+    public boolean displayDescription = true;
+    @Comment("Display 'Max level' in tooltip")
     public boolean displayMaxLvl = true;
+    @Comment("Display 'From' in tooltip")
     public boolean displayModFrom = true;
-    public boolean displayAplliesTo = true;
+    @Comment("Display 'Applies to' in tooltip")
+    public boolean displayAppliesTo = true;
 
 }
