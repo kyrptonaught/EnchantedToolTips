@@ -69,13 +69,13 @@
     "enchantment.minecraft.thorns.desc": "Damages attackers.",
     "enchantment.minecraft.unbreaking.desc": "Increases effective durability.",
 
-    "enchantment.aquarius.quardian_sight.desc": "Fire guardian-like beams at enemies while holding down right click.",
+    "enchantment.aquarius.guardian_sight.desc": "Fire guardian-like beams at enemies while holding down right click.",
 
-    "enchantment.biom4st3rmoenchants.treefeller.desc": "Mining a block mines duplicate blocks surrounding it.",
-    "enchantment.biom4st3rmoenchants.veinmeiner.desc": "Mining a block mines duplicate blocks surrounding it.",
-    "enchantment.biom4st3rmoenchants.autosmelt.desc": "Auto smelts mined block.",
-    "enchantment.biom4st3rmoenchants.tamedprotection.desc": "Increases effective durability.",
-    "enchantment.biom4st3rmoenchants.curseofender.desc": "Remember Curses only get Worse",
-    "enchantment.biom4st3rmoenchants.potionretention.desc": "Absorbs splash potion effects.",
-    "enchantment.biom4st3rmoenchants.herossword.desc": "Prevents damaging pets."
+    "enchantment.biom4st3rmoenchantments.treefeller.desc": "Mining a block mines duplicate blocks surrounding it.",
+    "enchantment.biom4st3rmoenchantments.veinminer.desc": "Mining a block mines duplicate blocks surrounding it.",
+    "enchantment.biom4st3rmoenchantments.autosmelt.desc": "Auto smelts mined block.",
+    "enchantment.biom4st3rmoenchantments.tamedprotection.desc": "Prevents damaging pets.",
+    "enchantment.biom4st3rmoenchantments.curseofender.desc": "???",
+    "enchantment.biom4st3rmoenchantments.potionretension.desc": "Absorbs splash potion effects to use against enemies.",
+    "enchantment.biom4st3rmoenchantments.herossword.desc": "???"
 }

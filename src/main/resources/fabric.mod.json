@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "id": "enchantedtooltips",
-  "version": "1.0.0b3",
+  "version": "1.0.0b4",
   "name": "Enchanted ToolTips",
-  "description": "Enhanced, enchantment Tool Tips",
+  "description": "Enhanced, enchantment info in Tool Tips",
   "authors": [
     "kyrptonaught"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/modded-tool-tips",
-    "sources": "https://github.com/kyrptonaught/enchantedtooltips"
+    "homepage": "https://github.com/kyrptonaught/EnchantedToolTips",
+    "sources": "https://github.com/kyrptonaught/EnchantedToolTips"
   },
   "license": "MIT",
   "icon": "assets/enchantedtooltips/icon.png",
