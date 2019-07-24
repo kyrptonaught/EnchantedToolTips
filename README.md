@@ -1,2 +1,2 @@
-# Modded Tooltips
-Simple mod to display the mod an item came from in it's tool tip
+# Enchanted ToolTips
+Display enchantment information in an items tooltip
