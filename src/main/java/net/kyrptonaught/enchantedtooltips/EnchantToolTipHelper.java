@@ -7,6 +7,7 @@ import net.kyrptonaught.enchantedtooltips.config.ConfigOptions;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.text.LiteralText;
@@ -27,7 +28,10 @@ public class EnchantToolTipHelper {
         long hndle = MinecraftClient.getInstance().window.getHandle();
         if (EnchantedToolTipMod.config.config.alwaysShowEnchantInfo || GLFW.glfwGetKey(hndle, GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
             appendEnchantInfo(list, enchants);
-        else if (EnchantedToolTipMod.config.config.displayPressForInfo) appendKeyHandler(list);
+        else {
+            ItemStack.appendEnchantments(list,enchants);
+            if (EnchantedToolTipMod.config.config.displayPressForInfo) appendKeyHandler(list);
+        }
     }
 
     private static void appendKeyHandler(List<Text> list) {

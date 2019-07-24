@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "enchantedtooltips",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "Enchanted ToolTips",
   "description": "Enhanced, enchantment info in Tool Tips",
   "authors": [
@@ -27,7 +27,6 @@
     "client": [
       "net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod"
     ],
-
     "modmenu": [
       "net.kyrptonaught.enchantedtooltips.config.ModMenuIntegration"
     ]
