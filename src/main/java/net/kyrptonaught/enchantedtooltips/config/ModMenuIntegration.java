@@ -11,6 +11,9 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -35,20 +38,25 @@ public class ModMenuIntegration implements ModMenuApi {
         category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.booksenabled", options.enableForBooks).setSaveConsumer(val -> options.enableForBooks = val).build());
         category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.itemsenabled", options.enableForItems).setSaveConsumer(val -> options.enableForItems = val).build());
 
-        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displayapplies", options.displayAppliesTo).setSaveConsumer(val -> options.displayAppliesTo = val).build());
-        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaydesc", options.displayDescription).setSaveConsumer(val -> options.displayDescription = val).build());
-        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymaxlvl", options.displayMaxLvl).setSaveConsumer(val -> options.displayMaxLvl = val).build());
-        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymodfrom", options.displayModFrom).setSaveConsumer(val -> options.displayModFrom = val).build());
-        ConfigCategory enchants = builder.getOrCreateCategory("key.enchantedtooltips.config.category.enchants");
+        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.alwaysshow", options.alwaysShowEnchantInfo).setSaveConsumer(val -> options.alwaysShowEnchantInfo = val).build());
+        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaypress", options.displayPressForInfo).setSaveConsumer(val -> options.displayPressForInfo = val).build());
 
-        for (Identifier identifier : Registry.ENCHANTMENT.getIds()) {
+        ConfigCategory display = builder.getOrCreateCategory("key.enchantedtooltips.config.category.display");
+        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displayapplies", options.displayAppliesTo).setSaveConsumer(val -> options.displayAppliesTo = val).build());
+        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaydesc", options.displayDescription).setSaveConsumer(val -> options.displayDescription = val).build());
+        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymaxlvl", options.displayMaxLvl).setSaveConsumer(val -> options.displayMaxLvl = val).build());
+        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymodfrom", options.displayModFrom).setSaveConsumer(val -> options.displayModFrom = val).build());
+        ConfigCategory enchantCategory = builder.getOrCreateCategory("key.enchantedtooltips.config.category.enchants");
+
+        List<Identifier> enchants = new ArrayList<>(Registry.ENCHANTMENT.getIds());
+        Collections.sort(enchants);
+        enchants.forEach(identifier -> {
             String id = identifier.toString();
             String enchant = "enchantment." + id.replace(":", ".") + ".desc";
-            enchants.addEntry(entryBuilder.startTextField(enchant.substring(12, enchant.length() - 5), EnchantedToolTipMod.config.enchantsLookup.enchants.getOrDefault(enchant, "")).setSaveConsumer(val -> {
-                if (!val.equals(""))
-                    EnchantedToolTipMod.config.enchantsLookup.enchants.put(enchant, val);
+            enchantCategory.addEntry(entryBuilder.startTextField(enchant.substring(12, enchant.length() - 5), EnchantedToolTipMod.config.enchantsLookup.enchants.getOrDefault(enchant, "")).setSaveConsumer(val -> {
+                if (!val.equals("")) EnchantedToolTipMod.config.enchantsLookup.enchants.put(enchant, val);
             }).build());
-        }
+        });
         return Optional.of(builder::build);
     }
 }

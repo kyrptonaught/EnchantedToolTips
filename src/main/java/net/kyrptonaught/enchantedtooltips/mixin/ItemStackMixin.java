@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import java.util.List;
 
 @Mixin(ItemStack.class)
-public class ItemMixin {
+public class ItemStackMixin {
 
     @Redirect(method = "getTooltip", at = @At(
             value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;appendEnchantments(Ljava/util/List;Lnet/minecraft/nbt/ListTag;)V"))

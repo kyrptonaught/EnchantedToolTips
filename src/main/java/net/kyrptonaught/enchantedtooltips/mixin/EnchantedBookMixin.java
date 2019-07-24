@@ -24,7 +24,7 @@ public class EnchantedBookMixin extends Item {
     }
 
     @Inject(method = "appendTooltip", at = @At("HEAD"), cancellable = true)
-    public void appendTooltip(ItemStack itemStack_1, World world_1, List<Text> list_1, TooltipContext tooltipContext_1, CallbackInfo cbi) {
+    public void ETTM$appendTooltip(ItemStack itemStack_1, World world_1, List<Text> list_1, TooltipContext tooltipContext_1, CallbackInfo cbi) {
         super.appendTooltip(itemStack_1, world_1, list_1, tooltipContext_1);
         if (MinecraftClient.getInstance().currentScreen == null) {
             ItemStack.appendEnchantments(list_1, EnchantedBookItem.getEnchantmentTag(itemStack_1));

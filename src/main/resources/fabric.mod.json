@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "enchantedtooltips",
-  "version": "1.0.0b4",
+  "version": "1.0.0",
   "name": "Enchanted ToolTips",
   "description": "Enhanced, enchantment info in Tool Tips",
   "authors": [

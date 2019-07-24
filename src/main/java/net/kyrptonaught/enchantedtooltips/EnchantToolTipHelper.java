@@ -7,7 +7,6 @@ import net.kyrptonaught.enchantedtooltips.config.ConfigOptions;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.text.LiteralText;
@@ -25,12 +24,10 @@ public class EnchantToolTipHelper {
 
 
     public static void appendToolTip(List<Text> list, ListTag enchants) {
-        if (GLFW.glfwGetKey(MinecraftClient.getInstance().window.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) == 0) {
-            ItemStack.appendEnchantments(list, enchants);
-            appendKeyHandler(list);
-        } else {
+        long hndle = MinecraftClient.getInstance().window.getHandle();
+        if (EnchantedToolTipMod.config.config.alwaysShowEnchantInfo || GLFW.glfwGetKey(hndle, GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
             appendEnchantInfo(list, enchants);
-        }
+        else if (EnchantedToolTipMod.config.config.displayPressForInfo) appendKeyHandler(list);
     }
 
     private static void appendKeyHandler(List<Text> list) {
@@ -49,7 +46,9 @@ public class EnchantToolTipHelper {
             Identifier enchantID = Identifier.tryParse(enchantTag.getString("id"));
             Enchantment enchant = Registry.ENCHANTMENT.get(enchantID);
             //name
-            list.add(enchant.getName(enchantTag.getInt("lvl")).formatted(enchant.isCursed() ? Formatting.RED : Formatting.DARK_GREEN));
+            Text lvl = new TranslatableText("enchantment.level." + enchantTag.getInt("lvl"));
+            Text name = new TranslatableText(enchant.getTranslationKey()).append(" ").append(lvl);
+            list.add(name.formatted(enchant.isCursed() ? Formatting.RED : Formatting.DARK_GREEN));
             //desc
             if (options.displayDescription) {
                 list.add(new LiteralText(" ").append(ETTM$getEnchantDesc("enchantment." + enchantTag.getString("id").replace(":", ".") + ".desc")).formatted(Formatting.WHITE));

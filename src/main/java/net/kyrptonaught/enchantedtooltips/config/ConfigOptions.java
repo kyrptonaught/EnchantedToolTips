@@ -9,6 +9,11 @@ public class ConfigOptions {
     @Comment("Should the enchant info be displayed on enchanted tools")
     public boolean enableForItems = true;
 
+    @Comment("Display 'Press for info' for enchant info")
+    public boolean displayPressForInfo = true;
+    @Comment("Always display the Enchant Information")
+    public boolean alwaysShowEnchantInfo = false;
+
     @Comment("Display 'Description' in tooltip")
     public boolean displayDescription = true;
     @Comment("Display 'Max level' in tooltip")
