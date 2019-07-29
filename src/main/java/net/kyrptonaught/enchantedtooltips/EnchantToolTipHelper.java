@@ -29,7 +29,7 @@ public class EnchantToolTipHelper {
         if (EnchantedToolTipMod.config.config.alwaysShowEnchantInfo || GLFW.glfwGetKey(hndle, GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
             appendEnchantInfo(list, enchants);
         else {
-            ItemStack.appendEnchantments(list,enchants);
+            ItemStack.appendEnchantments(list, enchants);
             if (EnchantedToolTipMod.config.config.displayPressForInfo) appendKeyHandler(list);
         }
     }
@@ -68,7 +68,7 @@ public class EnchantToolTipHelper {
             }
             //from
             if (options.displayModFrom) {
-                String mod = enchantID.getNamespace().toLowerCase();
+                String mod = enchantID.getNamespace();
                 mod = StringUtils.capitalize(FabricLoader.getInstance().getModContainer(mod).map(ModContainer::getMetadata).map(ModMetadata::getName).orElse(mod));
                 list.add(new TranslatableText("enchantedtooltip.enchant.from").formatted(Formatting.WHITE).append(new LiteralText(mod).formatted(Formatting.BLUE)));
             }
