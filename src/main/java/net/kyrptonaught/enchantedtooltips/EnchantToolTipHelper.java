@@ -19,10 +19,15 @@ import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class EnchantToolTipHelper {
+    private static HashMap<String, String> modCache = new HashMap<>();
 
+    static {
+        modCache.put("biom4st3rmoenchantments", "Mo' Enchantments");
+    }
 
     public static void appendToolTip(List<Text> list, ListTag enchants) {
         long hndle = MinecraftClient.getInstance().window.getHandle();
@@ -35,11 +40,8 @@ public class EnchantToolTipHelper {
     }
 
     private static void appendKeyHandler(List<Text> list) {
-        String[] msg = I18n.translate("enchantedtooltip.presssneak").split("KEY");
-        Text pre = new LiteralText(msg[0]);
-        Text mid = new TranslatableText("enchantedtooltip.KEY").formatted(Formatting.GREEN);
-        Text post = new LiteralText(msg[1]);
-        list.add(pre.append(mid).append(post));
+        String msg = I18n.translate("enchantedtooltip.presssneak").replaceAll("KEY", I18n.translate("enchantedtooltip.KEY"));
+        list.add(new LiteralText(msg));
     }
 
 
@@ -55,7 +57,7 @@ public class EnchantToolTipHelper {
             list.add(name.formatted(enchant.isCursed() ? Formatting.RED : Formatting.DARK_GREEN));
             //desc
             if (options.displayDescription) {
-                list.add(new LiteralText(" ").append(ETTM$getEnchantDesc("enchantment." + enchantTag.getString("id").replace(":", ".") + ".desc")).formatted(Formatting.WHITE));
+                list.add(new LiteralText(" ").append(getEnchantDesc("enchantment." + enchantTag.getString("id").replace(":", ".") + ".desc")).formatted(Formatting.WHITE));
             }
             //Level
             if (options.displayMaxLvl) {
@@ -68,14 +70,20 @@ public class EnchantToolTipHelper {
             }
             //from
             if (options.displayModFrom) {
-                String mod = enchantID.getNamespace();
-                mod = StringUtils.capitalize(FabricLoader.getInstance().getModContainer(mod).map(ModContainer::getMetadata).map(ModMetadata::getName).orElse(mod));
+                String mod = getFromMod(enchantID.getNamespace());
                 list.add(new TranslatableText("enchantedtooltip.enchant.from").formatted(Formatting.WHITE).append(new LiteralText(mod).formatted(Formatting.BLUE)));
             }
         }
     }
 
-    private static Text ETTM$getEnchantDesc(String text) {
+    private static String getFromMod(String id) {
+        if (!modCache.containsKey(id)) {
+            modCache.put(id, StringUtils.capitalize(FabricLoader.getInstance().getModContainer(id).map(ModContainer::getMetadata).map(ModMetadata::getName).orElse(id)));
+        }
+        return modCache.get(id);
+    }
+
+    private static Text getEnchantDesc(String text) {
         if (EnchantedToolTipMod.config.enchantsLookup.enchants.containsKey(text))
             return new LiteralText(EnchantedToolTipMod.config.enchantsLookup.enchants.get(text));
         return new TranslatableText(text);

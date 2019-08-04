@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "icon": "assets/enchantedtooltips/icon.png",
-  "environment": "*",
+  "environment": "client",
   "mixins": [
     {
       "config": "net.kyrptonaught.enchantedtooltips.json",
@@ -34,5 +34,8 @@
   "depends": {
     "fabricloader": ">=0.4.0",
     "fabric": "*"
+  },
+  "custom": {
+    "modmenu:clientsideOnly": true
   }
 }

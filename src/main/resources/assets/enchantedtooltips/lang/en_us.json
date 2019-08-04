@@ -12,7 +12,7 @@
   "key.enchantedtooltips.config.displaymodfrom": "Display 'From'",
   "enchantedtooltip.command.output": "Populated config file with all enchants",
   "enchantedtooltip.presssneak": "Press KEY for enchant info",
-  "enchantedtooltip.KEY": "SHIFT",
+  "enchantedtooltip.KEY": "§aSHIFT§r",
   "enchantedtooltip.enchant.maxLevel": " Max lvl: ",
   "enchantedtooltip.enchant.applicableTo": " Applies to: ",
   "enchantedtooltip.enchant.from": " From: ",
