@@ -32,6 +32,10 @@ public class ConfigManager {
         this.enchantsFile = new File(dir, "enchants.json5");
     }
 
+    public String getEnchantFileLocation() {
+        return enchantsFile.getPath();
+    }
+
     public void saveConfig() {
         try {
             if (!configFile.exists() && !configFile.createNewFile()) {
