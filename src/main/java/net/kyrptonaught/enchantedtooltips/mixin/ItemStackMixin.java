@@ -3,7 +3,6 @@ package net.kyrptonaught.enchantedtooltips.mixin;
 
 import net.kyrptonaught.enchantedtooltips.EnchantToolTipHelper;
 import net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod;
-import net.kyrptonaught.enchantedtooltips.config.ConfigOptions;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.ListTag;
@@ -24,8 +23,7 @@ public class ItemStackMixin {
             ItemStack.appendEnchantments(list, enchants);
             return;
         }
-        ConfigOptions config = EnchantedToolTipMod.config.config;
-        if (config.enableForItems)
+        if (EnchantedToolTipMod.getConfig().enableForItems)
             EnchantToolTipHelper.appendToolTip(list, enchants);
     }
 }

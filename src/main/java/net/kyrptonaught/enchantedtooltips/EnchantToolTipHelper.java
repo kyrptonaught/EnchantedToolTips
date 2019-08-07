@@ -31,11 +31,11 @@ public class EnchantToolTipHelper {
 
     public static void appendToolTip(List<Text> list, ListTag enchants) {
         long hndle = MinecraftClient.getInstance().window.getHandle();
-        if (EnchantedToolTipMod.config.config.alwaysShowEnchantInfo || GLFW.glfwGetKey(hndle, GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
+        if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(hndle, GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
             appendEnchantInfo(list, enchants);
         else {
             ItemStack.appendEnchantments(list, enchants);
-            if (EnchantedToolTipMod.config.config.displayPressForInfo) appendKeyHandler(list);
+            if (EnchantedToolTipMod.getConfig().displayPressForInfo) appendKeyHandler(list);
         }
     }
 
@@ -47,7 +47,7 @@ public class EnchantToolTipHelper {
 
     private static void appendEnchantInfo(List<Text> list, ListTag enchants) {
         for (int i = 0; i < enchants.size(); i++) {
-            ConfigOptions options = EnchantedToolTipMod.config.config;
+            ConfigOptions options = EnchantedToolTipMod.getConfig();
             CompoundTag enchantTag = enchants.getCompoundTag(i);
             Identifier enchantID = Identifier.tryParse(enchantTag.getString("id"));
             Enchantment enchant = Registry.ENCHANTMENT.get(enchantID);
@@ -83,9 +83,9 @@ public class EnchantToolTipHelper {
         return modCache.get(id);
     }
 
-    private static Text getEnchantDesc(String text) {
-        if (EnchantedToolTipMod.config.enchantsLookup.enchants.containsKey(text))
-            return new LiteralText(EnchantedToolTipMod.config.enchantsLookup.enchants.get(text));
-        return new TranslatableText(text);
+    private static Text getEnchantDesc(String enchantId) {
+        if (EnchantedToolTipMod.getEnchantConfigTranslations().containsKey(enchantId) && EnchantedToolTipMod.getEnchantConfigTranslations().get(enchantId).equals(""))
+            return new LiteralText(EnchantedToolTipMod.getEnchantConfigTranslations().get(enchantId));
+        return new TranslatableText(enchantId);
     }
 }

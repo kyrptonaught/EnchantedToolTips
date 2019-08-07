@@ -15,8 +15,8 @@ import java.nio.file.Files;
 public class ConfigManager {
     private static final Gson GSON = new GsonBuilder().create();
     private static final Jankson JANKSON = Jankson.builder().build();
-    public ConfigOptions config;
-    public EnchantsLookup enchantsLookup;
+    private ConfigOptions config;
+    private EnchantsLookup enchantsLookup;
     private final File configFile, enchantsFile;
 
     public ConfigManager() {
@@ -32,107 +32,76 @@ public class ConfigManager {
         this.enchantsFile = new File(dir, "enchants.json5");
     }
 
+    public ConfigOptions getConfig() {
+        return config;
+    }
+
+    public EnchantsLookup getEnchantsLookup() {
+        return enchantsLookup;
+    }
+
     public String getEnchantFileLocation() {
         return enchantsFile.getPath();
     }
 
-    public void saveConfig() {
+    public void saveAll() {
+        save(configFile, true);
+        save(enchantsFile, false);
+    }
+
+    public void loadAll() {
+        load(configFile, true);
+        load(enchantsFile, false);
+    }
+
+    private void save(File saveFile, boolean isConfig) {
         try {
-            if (!configFile.exists() && !configFile.createNewFile()) {
+            if (!saveFile.exists() && !saveFile.createNewFile()) {
                 System.out.println(EnchantedToolTipMod.MOD_ID + " Failed to save config! Overwriting with default config.");
-                config = new ConfigOptions();
+                resetToDefault(isConfig);
                 return;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            String result = JANKSON.toJson(config).toJson(true, true, 0);
-            if (!configFile.exists())
-                configFile.createNewFile();
-            FileOutputStream out = new FileOutputStream(configFile, false);
-
+        try (FileOutputStream out = new FileOutputStream(saveFile, false)) {
+            String result = JANKSON.toJson(isConfig ? config : enchantsLookup).toJson(true, true, 0);
+            if (!saveFile.exists())
+                saveFile.createNewFile();
             out.write(result.getBytes());
-            out.flush();
-            out.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(EnchantedToolTipMod.MOD_ID + " Failed to save config! Overwriting with default config.");
-            config = new ConfigOptions();
-            return;
+            resetToDefault(isConfig);
         }
     }
 
-    public void loadConfig() {
-        if (!configFile.exists() || !configFile.canRead()) {
+    private void load(File saveFile, boolean isConfig) {
+        if (!saveFile.exists() || !saveFile.canRead()) {
             System.out.println(EnchantedToolTipMod.MOD_ID + " Config not found! Creating one.");
-            config = new ConfigOptions();
-            saveConfig();
+            resetToDefault(isConfig);
+            save(saveFile, isConfig);
             return;
         }
         boolean failed = false;
         try {
-            JsonObject configJson = JANKSON.load(configFile);
+            JsonObject configJson = JANKSON.load(saveFile);
             String regularized = configJson.toJson(false, false, 0);
-            config = GSON.fromJson(regularized, ConfigOptions.class);
+            if (isConfig) config = GSON.fromJson(regularized, ConfigOptions.class);
+            else enchantsLookup = GSON.fromJson(regularized, EnchantsLookup.class);
         } catch (Exception e) {
             e.printStackTrace();
             failed = true;
         }
-        if (failed || config == null) {
+        if (failed || (isConfig && config == null) || (!isConfig && enchantsLookup == null)) {
             System.out.println(EnchantedToolTipMod.MOD_ID + " Failed to load config! Overwriting with default config.");
-            config = new ConfigOptions();
+            resetToDefault(isConfig);
         }
-        saveConfig();
+        save(saveFile, isConfig);
     }
 
-    public void saveEnchants() {
-        try {
-            if (!enchantsFile.exists() && !enchantsFile.createNewFile()) {
-                System.out.println(EnchantedToolTipMod.MOD_ID + " Failed to save config! Overwriting with default config.");
-                enchantsLookup = new EnchantsLookup();
-                return;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            String result = JANKSON.toJson(enchantsLookup).toJson(true, true, 0);
-            if (!enchantsFile.exists())
-                enchantsFile.createNewFile();
-            FileOutputStream out = new FileOutputStream(enchantsFile, false);
-
-            out.write(result.getBytes());
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(EnchantedToolTipMod.MOD_ID + " Failed to save config! Overwriting with default config.");
-            enchantsLookup = new EnchantsLookup();
-            return;
-        }
-    }
-
-    public void loadEnchants() {
-        if (!enchantsFile.exists() || !enchantsFile.canRead()) {
-            System.out.println(EnchantedToolTipMod.MOD_ID + " Config not found! Creating one.");
-            enchantsLookup = new EnchantsLookup();
-            saveEnchants();
-            return;
-        }
-        boolean failed = false;
-        try {
-            JsonObject configJson = JANKSON.load(enchantsFile);
-            String regularized = configJson.toJson(false, false, 0);
-            enchantsLookup = GSON.fromJson(regularized, EnchantsLookup.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            failed = true;
-        }
-        if (failed || enchantsLookup == null) {
-            System.out.println(EnchantedToolTipMod.MOD_ID + " Failed to load config! Overwriting with default config.");
-            enchantsLookup = new EnchantsLookup();
-        }
-        saveEnchants();
+    private void resetToDefault(boolean isConfig) {
+        if (isConfig) config = new ConfigOptions();
+        else enchantsLookup = new EnchantsLookup();
     }
 }

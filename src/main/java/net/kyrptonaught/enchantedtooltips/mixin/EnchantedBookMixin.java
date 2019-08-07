@@ -30,7 +30,7 @@ public class EnchantedBookMixin extends Item {
             ItemStack.appendEnchantments(list_1, EnchantedBookItem.getEnchantmentTag(itemStack_1));
             return;
         }
-        if (EnchantedToolTipMod.config.config.enableForBooks) {
+        if (EnchantedToolTipMod.getConfig().enableForBooks) {
             EnchantToolTipHelper.appendToolTip(list_1, EnchantedBookItem.getEnchantmentTag(itemStack_1));
             cbi.cancel();
             return;

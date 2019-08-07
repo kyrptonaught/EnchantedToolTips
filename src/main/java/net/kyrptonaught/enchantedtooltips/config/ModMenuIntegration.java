@@ -27,25 +27,24 @@ public class ModMenuIntegration implements ModMenuApi {
 
     @Override
     public Optional<Supplier<Screen>> getConfigScreen(Screen screen) {
-        ConfigOptions options = EnchantedToolTipMod.config.config;
+        ConfigOptions options = EnchantedToolTipMod.getConfig();
         ConfigBuilder builder = ConfigBuilder.create().setParentScreen(screen).setTitle("Enchanted ToolTips Config");
         builder.setSavingRunnable(() -> {
-            EnchantedToolTipMod.config.saveConfig();
-            EnchantedToolTipMod.config.saveEnchants();
+            EnchantedToolTipMod.config.saveAll();
         });
         ConfigCategory category = builder.getOrCreateCategory("key.enchantedtooltips.config.category.main");
         ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
-        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.booksenabled", options.enableForBooks).setSaveConsumer(val -> options.enableForBooks = val).build());
-        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.itemsenabled", options.enableForItems).setSaveConsumer(val -> options.enableForItems = val).build());
+        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.booksenabled", options.enableForBooks).setDefaultValue(true).setSaveConsumer(val -> options.enableForBooks = val).build());
+        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.itemsenabled", options.enableForItems).setDefaultValue(true).setSaveConsumer(val -> options.enableForItems = val).build());
 
-        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.alwaysshow", options.alwaysShowEnchantInfo).setSaveConsumer(val -> options.alwaysShowEnchantInfo = val).build());
-        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaypress", options.displayPressForInfo).setSaveConsumer(val -> options.displayPressForInfo = val).build());
+        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.alwaysshow", options.alwaysShowEnchantInfo).setDefaultValue(false).setSaveConsumer(val -> options.alwaysShowEnchantInfo = val).build());
+        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaypress", options.displayPressForInfo).setDefaultValue(true).setSaveConsumer(val -> options.displayPressForInfo = val).build());
 
         ConfigCategory display = builder.getOrCreateCategory("key.enchantedtooltips.config.category.display");
-        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displayapplies", options.displayAppliesTo).setSaveConsumer(val -> options.displayAppliesTo = val).build());
-        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaydesc", options.displayDescription).setSaveConsumer(val -> options.displayDescription = val).build());
-        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymaxlvl", options.displayMaxLvl).setSaveConsumer(val -> options.displayMaxLvl = val).build());
-        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymodfrom", options.displayModFrom).setSaveConsumer(val -> options.displayModFrom = val).build());
+        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displayapplies", options.displayAppliesTo).setDefaultValue(true).setSaveConsumer(val -> options.displayAppliesTo = val).build());
+        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaydesc", options.displayDescription).setDefaultValue(true).setSaveConsumer(val -> options.displayDescription = val).build());
+        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymaxlvl", options.displayMaxLvl).setDefaultValue(true).setSaveConsumer(val -> options.displayMaxLvl = val).build());
+        display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymodfrom", options.displayModFrom).setDefaultValue(true).setSaveConsumer(val -> options.displayModFrom = val).build());
         ConfigCategory enchantCategory = builder.getOrCreateCategory("key.enchantedtooltips.config.category.enchants");
 
         List<Identifier> enchants = new ArrayList<>(Registry.ENCHANTMENT.getIds());
@@ -53,8 +52,9 @@ public class ModMenuIntegration implements ModMenuApi {
         enchants.forEach(identifier -> {
             String id = identifier.toString();
             String enchant = "enchantment." + id.replace(":", ".") + ".desc";
-            enchantCategory.addEntry(entryBuilder.startTextField(enchant.substring(12, enchant.length() - 5), EnchantedToolTipMod.config.enchantsLookup.enchants.getOrDefault(enchant, "")).setSaveConsumer(val -> {
-                if (!val.equals("")) EnchantedToolTipMod.config.enchantsLookup.enchants.put(enchant, val);
+            enchantCategory.addEntry(entryBuilder.startTextField(enchant.substring(12, enchant.length() - 5), EnchantedToolTipMod.getEnchantConfigTranslations().getOrDefault(enchant, "")).setDefaultValue("").setSaveConsumer(val -> {
+                if (val.equals("")) EnchantedToolTipMod.getEnchantConfigTranslations().remove(enchant);
+                else EnchantedToolTipMod.getEnchantConfigTranslations().put(enchant, val);
             }).build());
         });
         return Optional.of(builder::build);
