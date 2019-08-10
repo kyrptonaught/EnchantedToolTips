@@ -50,7 +50,14 @@ public class EnchantToolTipHelper {
             ConfigOptions options = EnchantedToolTipMod.getConfig();
             CompoundTag enchantTag = enchants.getCompoundTag(i);
             Identifier enchantID = Identifier.tryParse(enchantTag.getString("id"));
+            if (enchantID == null) continue;
             Enchantment enchant = Registry.ENCHANTMENT.get(enchantID);
+            if (enchant == null) {
+                list.add(new LiteralText(enchantTag.getString("id")).formatted(Formatting.GOLD));
+                list.add(new TranslatableText("enchantedtooltip.enchant.removed").formatted(Formatting.WHITE));
+                list.add(new TranslatableText("enchantedtooltip.enchant.removed2").formatted(Formatting.WHITE));
+                continue;
+            }
             //name
             Text lvl = new TranslatableText("enchantment.level." + enchantTag.getInt("lvl"));
             Text name = new TranslatableText(enchant.getTranslationKey()).append(" ").append(lvl);
@@ -84,8 +91,8 @@ public class EnchantToolTipHelper {
     }
 
     private static Text getEnchantDesc(String enchantId) {
-        if (EnchantedToolTipMod.getEnchantConfigTranslations().containsKey(enchantId) && EnchantedToolTipMod.getEnchantConfigTranslations().get(enchantId).equals(""))
-            return new LiteralText(EnchantedToolTipMod.getEnchantConfigTranslations().get(enchantId));
+        if (EnchantedToolTipMod.getEnchantTranslations().containsKey(enchantId) && EnchantedToolTipMod.getEnchantTranslations().get(enchantId).equals(""))
+            return new LiteralText(EnchantedToolTipMod.getEnchantTranslations().get(enchantId));
         return new TranslatableText(enchantId);
     }
 }

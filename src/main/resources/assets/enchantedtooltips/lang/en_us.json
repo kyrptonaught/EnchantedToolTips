@@ -14,6 +14,8 @@
   "enchantedtooltip.command.outputLocation": "Config file found at: ",
   "enchantedtooltip.presssneak": "Press KEY for enchant info",
   "enchantedtooltip.KEY": "§aSHIFT§r",
+  "enchantedtooltip.enchant.removed": " Missing enchantment data",
+  "enchantedtooltip.enchant.removed2": " A mod may have been removed/updated",
   "enchantedtooltip.enchant.maxLevel": " Max lvl: ",
   "enchantedtooltip.enchant.applicableTo": " Applies to: ",
   "enchantedtooltip.enchant.from": " From: ",

@@ -52,9 +52,9 @@ public class ModMenuIntegration implements ModMenuApi {
         enchants.forEach(identifier -> {
             String id = identifier.toString();
             String enchant = "enchantment." + id.replace(":", ".") + ".desc";
-            enchantCategory.addEntry(entryBuilder.startTextField(enchant.substring(12, enchant.length() - 5), EnchantedToolTipMod.getEnchantConfigTranslations().getOrDefault(enchant, "")).setDefaultValue("").setSaveConsumer(val -> {
-                if (val.equals("")) EnchantedToolTipMod.getEnchantConfigTranslations().remove(enchant);
-                else EnchantedToolTipMod.getEnchantConfigTranslations().put(enchant, val);
+            enchantCategory.addEntry(entryBuilder.startTextField(enchant.substring(12, enchant.length() - 5), EnchantedToolTipMod.getEnchantTranslations().getOrDefault(enchant, "")).setDefaultValue("").setSaveConsumer(val -> {
+                if (val.equals("")) EnchantedToolTipMod.getEnchantTranslations().remove(enchant);
+                else EnchantedToolTipMod.getEnchantTranslations().put(enchant, val);
             }).build());
         });
         return Optional.of(builder::build);

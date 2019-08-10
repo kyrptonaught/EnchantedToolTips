@@ -26,8 +26,8 @@ public class GenEnchantsCommand implements ClientCommandPlugin {
         for (Identifier identifier : Registry.ENCHANTMENT.getIds()) {
             String id = identifier.toString();
             String enchant = "enchantment." + id.replace(":", ".") + ".desc";
-            if (shouldOverwrite || !EnchantedToolTipMod.getEnchantConfigTranslations().containsKey(enchant))
-                EnchantedToolTipMod.getEnchantConfigTranslations().put(enchant, I18n.translate(enchant));
+            if (shouldOverwrite || !EnchantedToolTipMod.getEnchantTranslations().containsKey(enchant))
+                EnchantedToolTipMod.getEnchantTranslations().put(enchant, I18n.translate(enchant));
         }
         EnchantedToolTipMod.config.saveAll();
         serverCommandSource.sendFeedback(new TranslatableText("enchantedtooltip.command.output"));
