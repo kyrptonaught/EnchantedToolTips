@@ -8,11 +8,16 @@ public class ConfigOptions {
     public boolean enableForBooks = true;
     @Comment("Should the enchant info be displayed on enchanted tools")
     public boolean enableForItems = true;
+    @Comment("Should the enchant info be displayed in Enchanting Table")
+    public boolean enableForEnchantTable = true;
 
     @Comment("Display 'Press for info' for enchant info")
     public boolean displayPressForInfo = true;
     @Comment("Always display the Enchant Information")
     public boolean alwaysShowEnchantInfo = false;
+    @Comment("Display missing enchantment data")
+    public boolean displayMissingEnchant = true;
+
 
     @Comment("Display 'Description' in tooltip")
     public boolean displayDescription = true;

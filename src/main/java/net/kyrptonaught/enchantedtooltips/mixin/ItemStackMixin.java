@@ -24,6 +24,6 @@ public class ItemStackMixin {
             return;
         }
         if (EnchantedToolTipMod.getConfig().enableForItems)
-            EnchantToolTipHelper.appendToolTip(list, enchants);
+            EnchantToolTipHelper.appendToolTip(list, enchants,true);
     }
 }

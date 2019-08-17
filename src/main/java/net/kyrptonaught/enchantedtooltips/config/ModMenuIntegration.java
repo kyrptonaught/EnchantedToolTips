@@ -36,9 +36,11 @@ public class ModMenuIntegration implements ModMenuApi {
         ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
         category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.booksenabled", options.enableForBooks).setDefaultValue(true).setSaveConsumer(val -> options.enableForBooks = val).build());
         category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.itemsenabled", options.enableForItems).setDefaultValue(true).setSaveConsumer(val -> options.enableForItems = val).build());
+        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.tableenabled", options.enableForEnchantTable).setDefaultValue(true).setSaveConsumer(val -> options.enableForEnchantTable = val).build());
 
         category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.alwaysshow", options.alwaysShowEnchantInfo).setDefaultValue(false).setSaveConsumer(val -> options.alwaysShowEnchantInfo = val).build());
         category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaypress", options.displayPressForInfo).setDefaultValue(true).setSaveConsumer(val -> options.displayPressForInfo = val).build());
+        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymissing", options.displayMissingEnchant).setDefaultValue(true).setSaveConsumer(val -> options.displayMissingEnchant = val).build());
 
         ConfigCategory display = builder.getOrCreateCategory("key.enchantedtooltips.config.category.display");
         display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displayapplies", options.displayAppliesTo).setDefaultValue(true).setSaveConsumer(val -> options.displayAppliesTo = val).build());

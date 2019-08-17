@@ -29,13 +29,14 @@ public class EnchantToolTipHelper {
         modCache.put("biom4st3rmoenchantments", "Mo' Enchantments");
     }
 
-    public static void appendToolTip(List<Text> list, ListTag enchants) {
-        long hndle = MinecraftClient.getInstance().window.getHandle();
-        if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(hndle, GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
+    public static void appendToolTip(List<Text> list, ListTag enchants, boolean isItem) {
+        if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(MinecraftClient.getInstance().window.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
             appendEnchantInfo(list, enchants);
         else {
-            ItemStack.appendEnchantments(list, enchants);
-            if (EnchantedToolTipMod.getConfig().displayPressForInfo) appendKeyHandler(list);
+            if (isItem)
+                ItemStack.appendEnchantments(list, enchants);
+            if (EnchantedToolTipMod.getConfig().displayPressForInfo)
+                appendKeyHandler(list);
         }
     }
 
@@ -53,9 +54,11 @@ public class EnchantToolTipHelper {
             if (enchantID == null) continue;
             Enchantment enchant = Registry.ENCHANTMENT.get(enchantID);
             if (enchant == null) {
-                list.add(new LiteralText(enchantTag.getString("id")).formatted(Formatting.GOLD));
-                list.add(new TranslatableText("enchantedtooltip.enchant.removed").formatted(Formatting.WHITE));
-                list.add(new TranslatableText("enchantedtooltip.enchant.removed2").formatted(Formatting.WHITE));
+                if (options.displayMissingEnchant) {
+                    list.add(new LiteralText(enchantTag.getString("id")).formatted(Formatting.GOLD));
+                    list.add(new TranslatableText("enchantedtooltip.enchant.removed").formatted(Formatting.WHITE));
+                    list.add(new TranslatableText("enchantedtooltip.enchant.removed2").formatted(Formatting.WHITE));
+                }
                 continue;
             }
             //name

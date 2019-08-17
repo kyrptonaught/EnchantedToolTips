@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ItemStackMixin",
-    "EnchantedBookMixin"
+    "EnchantedBookMixin",
+    "EnchantingScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
