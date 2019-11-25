@@ -31,7 +31,7 @@ public class EnchantedBookMixin extends Item {
             return;
         }
         if (EnchantedToolTipMod.getConfig().enableForBooks) {
-            EnchantToolTipHelper.appendToolTip(list_1, EnchantedBookItem.getEnchantmentTag(itemStack_1),true);
+            EnchantToolTipHelper.appendToolTip(list_1, EnchantedBookItem.getEnchantmentTag(itemStack_1), true);
             cbi.cancel();
             return;
         }

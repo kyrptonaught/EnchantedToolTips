@@ -16,7 +16,7 @@ public class ConfigManager {
     private static final Gson GSON = new GsonBuilder().create();
     private static final Jankson JANKSON = Jankson.builder().build();
     private ConfigOptions config;
-    private EnchantsLookup enchantsLookup;
+    private CustomEnchantNames enchantsLookup;
     private final File configFile, enchantsFile;
 
     public ConfigManager() {
@@ -36,7 +36,7 @@ public class ConfigManager {
         return config;
     }
 
-    public EnchantsLookup getEnchantsLookup() {
+    public CustomEnchantNames getEnchantsLookup() {
         return enchantsLookup;
     }
 
@@ -88,7 +88,7 @@ public class ConfigManager {
             JsonObject configJson = JANKSON.load(saveFile);
             String regularized = configJson.toJson(false, false, 0);
             if (isConfig) config = GSON.fromJson(regularized, ConfigOptions.class);
-            else enchantsLookup = GSON.fromJson(regularized, EnchantsLookup.class);
+            else enchantsLookup = GSON.fromJson(regularized, CustomEnchantNames.class);
         } catch (Exception e) {
             e.printStackTrace();
             failed = true;
@@ -102,6 +102,6 @@ public class ConfigManager {
 
     private void resetToDefault(boolean isConfig) {
         if (isConfig) config = new ConfigOptions();
-        else enchantsLookup = new EnchantsLookup();
+        else enchantsLookup = new CustomEnchantNames();
     }
 }

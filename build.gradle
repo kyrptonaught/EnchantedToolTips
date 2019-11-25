@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.5-SNAPSHOT'
+	id 'fabric-loom' version '0.2.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -29,8 +29,8 @@ dependencies {
 	modImplementation "io.github.cottonmc:cotton-client-commands:+"
 	include "io.github.cottonmc:cotton-client-commands:+"
 
-	modImplementation ('me.shedaniel.cloth:config-2:+'){transitive = false}
-	include 'me.shedaniel.cloth:config-2:+'
+	modImplementation ('me.shedaniel.cloth:config-2:1.8'){transitive = false}
+	include 'me.shedaniel.cloth:config-2:1.8'
 
 	modApi "blue.endless:jankson:+"
 	include "blue.endless:jankson:+"

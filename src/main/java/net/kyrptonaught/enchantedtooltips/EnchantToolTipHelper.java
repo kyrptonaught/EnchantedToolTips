@@ -94,8 +94,8 @@ public class EnchantToolTipHelper {
     }
 
     private static Text getEnchantDesc(String enchantId) {
-        if (EnchantedToolTipMod.getEnchantTranslations().containsKey(enchantId) && EnchantedToolTipMod.getEnchantTranslations().get(enchantId).equals(""))
-            return new LiteralText(EnchantedToolTipMod.getEnchantTranslations().get(enchantId));
+        if (EnchantedToolTipMod.getCustomEnchantsNames().containsKey(enchantId) && !EnchantedToolTipMod.getCustomEnchantsNames().get(enchantId).equals(""))
+            return new LiteralText(EnchantedToolTipMod.getCustomEnchantsNames().get(enchantId));
         return new TranslatableText(enchantId);
     }
 }
