@@ -14,7 +14,7 @@ public class EnchantedToolTipMod implements ClientModInitializer {
         config.loadAll();
     }
 
-    public static HashMap<String, String> getEnchantTranslations() {
+    public static HashMap<String, String> getCustomEnchantsNames() {
         return config.getEnchantsLookup().enchants;
     }
 
