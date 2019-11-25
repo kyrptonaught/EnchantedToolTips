@@ -30,7 +30,7 @@ public class EnchantToolTipHelper {
     }
 
     public static void appendToolTip(List<Text> list, ListTag enchants, boolean isItem) {
-        if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(MinecraftClient.getInstance().window.getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
+        if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
             appendEnchantInfo(list, enchants);
         else {
             if (isItem)
@@ -49,7 +49,7 @@ public class EnchantToolTipHelper {
     private static void appendEnchantInfo(List<Text> list, ListTag enchants) {
         for (int i = 0; i < enchants.size(); i++) {
             ConfigOptions options = EnchantedToolTipMod.getConfig();
-            CompoundTag enchantTag = enchants.getCompoundTag(i);
+            CompoundTag enchantTag = enchants.getCompound(i);
             Identifier enchantID = Identifier.tryParse(enchantTag.getString("id"));
             if (enchantID == null) continue;
             Enchantment enchant = Registry.ENCHANTMENT.get(enchantID);
