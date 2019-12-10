@@ -26,13 +26,12 @@ public class GenEnchantsCommand implements ClientCommandPlugin {
         for (Identifier identifier : Registry.ENCHANTMENT.getIds()) {
             String id = identifier.toString();
             String enchant = "enchantment." + id.replace(":", ".") + ".desc";
-            if (shouldOverwrite || !EnchantedToolTipMod.getEnchantTranslations().containsKey(enchant))
-                EnchantedToolTipMod.getEnchantTranslations().put(enchant, I18n.translate(enchant));
+            if (shouldOverwrite || !EnchantedToolTipMod.getCustomEnchantsNames().containsKey(enchant))
+                EnchantedToolTipMod.getCustomEnchantsNames().put(enchant, I18n.translate(enchant));
         }
         EnchantedToolTipMod.config.saveAll();
         serverCommandSource.sendFeedback(new TranslatableText("enchantedtooltip.command.output"));
         serverCommandSource.sendFeedback(new TranslatableText("enchantedtooltip.command.outputLocation").append(EnchantedToolTipMod.config.getEnchantFileLocation()));
-
         return 1;
     }
 }

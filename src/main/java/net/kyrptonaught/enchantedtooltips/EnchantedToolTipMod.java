@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class EnchantedToolTipMod implements ClientModInitializer {
     public static final String MOD_ID = "enchantedtooltips";
     public static ConfigManager config = new ConfigManager();
+
     @Override
     public void onInitializeClient() {
         config.loadAll();
