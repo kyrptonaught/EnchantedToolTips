@@ -1,5 +1,5 @@
 package net.kyrptonaught.enchantedtooltips;
-
+/*
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import io.github.cottonmc.clientcommands.ArgumentBuilders;
@@ -35,3 +35,4 @@ public class GenEnchantsCommand implements ClientCommandPlugin {
         return 1;
     }
 }
+*/

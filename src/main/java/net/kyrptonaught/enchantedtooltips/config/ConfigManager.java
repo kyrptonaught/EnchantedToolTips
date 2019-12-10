@@ -17,6 +17,7 @@ public class ConfigManager {
     private static final Jankson JANKSON = Jankson.builder().build();
     private ConfigOptions config;
     private CustomEnchantNames enchantsLookup;
+
     private final File configFile, enchantsFile;
 
     public ConfigManager() {
@@ -89,6 +90,7 @@ public class ConfigManager {
             String regularized = configJson.toJson(false, false, 0);
             if (isConfig) config = GSON.fromJson(regularized, ConfigOptions.class);
             else enchantsLookup = GSON.fromJson(regularized, CustomEnchantNames.class);
+
         } catch (Exception e) {
             e.printStackTrace();
             failed = true;
