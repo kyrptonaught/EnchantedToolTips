@@ -5,7 +5,8 @@
   "mixins": [
     "ItemStackMixin",
     "EnchantedBookMixin",
-    "EnchantingScreenMixin"
+    "EnchantingScreenMixin",
+    "TextMixin"
   ],
   "injectors": {
     "defaultRequire": 1
