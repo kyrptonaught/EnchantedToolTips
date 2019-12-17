@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "enchantedtooltips",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "name": "Enchanted ToolTips",
   "description": "Enhanced, enchantment info in Tool Tips",
   "authors": [
@@ -23,9 +23,6 @@
   "entrypoints": {
     "client": [
       "net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod"
-    ],
-    "cotton-client-commands": [
-      "net.kyrptonaught.enchantedtooltips.GenEnchantsCommand"
     ],
     "modmenu": [
       "net.kyrptonaught.enchantedtooltips.config.ModMenuIntegration"
