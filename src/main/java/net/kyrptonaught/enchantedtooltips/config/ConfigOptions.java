@@ -1,8 +1,9 @@
 package net.kyrptonaught.enchantedtooltips.config;
 
 import blue.endless.jankson.Comment;
+import net.kyrptonaught.kyrptconfig.config.AbstractConfigFile;
 
-public class ConfigOptions {
+public class ConfigOptions implements AbstractConfigFile {
 
     @Comment("Should the enchant info be displayed on enchanted book")
     public boolean enableForBooks = true;
@@ -17,6 +18,9 @@ public class ConfigOptions {
     public boolean alwaysShowEnchantInfo = false;
     @Comment("Display missing enchantment data")
     public boolean displayMissingEnchant = true;
+
+    @Comment("Should the enchant info be sorted alphabetically")
+    public boolean sortEnchantInfo = false;
 
 
     @Comment("Display 'Description' in tooltip")

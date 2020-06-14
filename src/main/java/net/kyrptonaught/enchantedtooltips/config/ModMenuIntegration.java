@@ -41,6 +41,7 @@ public class ModMenuIntegration implements ModMenuApi {
         category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.alwaysshow", options.alwaysShowEnchantInfo).setDefaultValue(false).setSaveConsumer(val -> options.alwaysShowEnchantInfo = val).build());
         category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaypress", options.displayPressForInfo).setDefaultValue(true).setSaveConsumer(val -> options.displayPressForInfo = val).build());
         category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displaymissing", options.displayMissingEnchant).setDefaultValue(true).setSaveConsumer(val -> options.displayMissingEnchant = val).build());
+        category.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.sortenchants", options.sortEnchantInfo).setDefaultValue(false).setSaveConsumer(val -> options.sortEnchantInfo = val).build());
 
         ConfigCategory display = builder.getOrCreateCategory("key.enchantedtooltips.config.category.display");
         display.addEntry(entryBuilder.startBooleanToggle("key.enchantedtooltips.config.displayapplies", options.displayAppliesTo).setDefaultValue(true).setSaveConsumer(val -> options.displayAppliesTo = val).build());

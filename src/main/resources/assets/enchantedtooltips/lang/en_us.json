@@ -7,6 +7,7 @@
   "key.enchantedtooltips.config.alwaysshow": "Always display enchant info",
   "key.enchantedtooltips.config.displaypress": "Display 'Press SHIFT for enchant info'",
   "key.enchantedtooltips.config.displaymissing": "Display missing enchantment data",
+  "key.enchantedtooltips.config.sortenchants": "Sort enchant info alphabetically",
   "key.enchantedtooltips.config.category.display": "ToolTip customizations",
   "key.enchantedtooltips.config.displaymaxlvl": "Display 'Max level'",
   "key.enchantedtooltips.config.displayapplies": "Display 'Applies to'",

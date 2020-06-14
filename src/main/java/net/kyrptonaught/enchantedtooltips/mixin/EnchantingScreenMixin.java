@@ -2,7 +2,7 @@ package net.kyrptonaught.enchantedtooltips.mixin;
 
 import net.kyrptonaught.enchantedtooltips.EnchantToolTipHelper;
 import net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod;
-import net.minecraft.client.gui.screen.ingame.AbstractContainerScreen;
+import net.minecraft.client.gui.screen.ingame.ContainerScreen;
 import net.minecraft.client.gui.screen.ingame.EnchantingScreen;
 import net.minecraft.container.EnchantingTableContainer;
 import net.minecraft.enchantment.Enchantment;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mixin(EnchantingScreen.class)
-public abstract class EnchantingScreenMixin extends AbstractContainerScreen<EnchantingTableContainer> {
+public abstract class EnchantingScreenMixin extends ContainerScreen<EnchantingTableContainer> {
     public EnchantingScreenMixin(EnchantingTableContainer container_1, PlayerInventory playerInventory_1, Text text_1) {
         super(container_1, playerInventory_1, text_1);
     }

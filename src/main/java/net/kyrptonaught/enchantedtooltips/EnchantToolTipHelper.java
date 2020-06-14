@@ -19,6 +19,7 @@ import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,9 +31,12 @@ public class EnchantToolTipHelper {
     }
 
     public static void appendToolTip(List<Text> list, ListTag enchants, boolean isItem) {
-        if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) != 0)
-            appendEnchantInfo(list, enchants);
-        else {
+        if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) != 0) {
+            ListTag enchantsCopy = enchants.copy();
+            if (EnchantedToolTipMod.getConfig().sortEnchantInfo)
+                enchantsCopy.sort(Comparator.comparing(enchant -> ((CompoundTag) enchant).getString("id")));
+            appendEnchantInfo(list, enchantsCopy);
+        } else {
             if (isItem)
                 ItemStack.appendEnchantments(list, enchants);
             if (EnchantedToolTipMod.getConfig().displayPressForInfo)
