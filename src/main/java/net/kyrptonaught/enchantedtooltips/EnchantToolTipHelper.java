@@ -31,14 +31,14 @@ public class EnchantToolTipHelper {
     }
 
     public static void appendToolTip(List<Text> list, ListTag enchants, boolean isItem) {
+        ListTag enchantsCopy = enchants.copy();
+        if (EnchantedToolTipMod.getConfig().sortEnchantInfo)
+            enchantsCopy.sort(Comparator.comparing(enchant -> ((CompoundTag) enchant).getString("id")));
         if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) != 0) {
-            ListTag enchantsCopy = enchants.copy();
-            if (EnchantedToolTipMod.getConfig().sortEnchantInfo)
-                enchantsCopy.sort(Comparator.comparing(enchant -> ((CompoundTag) enchant).getString("id")));
             appendEnchantInfo(list, enchantsCopy);
         } else {
             if (isItem)
-                ItemStack.appendEnchantments(list, enchants);
+                ItemStack.appendEnchantments(list, enchantsCopy);
             if (EnchantedToolTipMod.getConfig().displayPressForInfo)
                 appendKeyHandler(list);
         }
