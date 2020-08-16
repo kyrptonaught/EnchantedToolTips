@@ -11,18 +11,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.screen.EnchantmentScreenHandler;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.StringRenderable;
+import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mixin(EnchantmentScreen.class)
 public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScreenHandler> {
@@ -31,8 +28,7 @@ public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScr
     }
 
     @Override
-    public void renderTooltip(MatrixStack matrices, List<? extends StringRenderable> lines, int x, int y) {
-        List<Text> betteLines = (List<Text>)lines;
+    public void renderTooltip(MatrixStack matrices, List<Text> lines, int x, int y) {
         if (EnchantedToolTipMod.getConfig().enableForEnchantTable) {
             ListTag enchants = new ListTag();
             for (int i = 0; i < this.handler.enchantmentId.length; i++) {
@@ -49,14 +45,13 @@ public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScr
 
             List<Text> list2 = new ArrayList<>();
             EnchantToolTipHelper.appendToolTip(list2, enchants, false);
-            betteLines.addAll(list2);
+            lines.addAll(list2);
         }
-        super.renderTooltip(matrices,betteLines, x, y);
+        super.renderTooltip(matrices,lines, x, y);
     }
 
-    @Override
-    public void renderTooltip(MatrixStack matrices, StringRenderable stringRenderable, int x, int y) {
-        super.renderTooltip(matrices,Collections.singletonList(stringRenderable), x, y);
+    public void renderTooltip(MatrixStack matrixStack, Text text, int i, int j) {
+        this.renderOrderedTooltip(matrixStack, Arrays.asList(text.asOrderedText()), i, j);
     }
 
     @Override

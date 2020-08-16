@@ -31,9 +31,8 @@ public class ModMenuIntegration implements ModMenuApi {
         return (screen) -> {
             ConfigOptions options = EnchantedToolTipMod.getConfig();
             ConfigBuilder builder = ConfigBuilder.create().setParentScreen(screen).setTitle(new TranslatableText("Enchanted ToolTips Config"));
-            builder.setSavingRunnable(() -> {
-                EnchantedToolTipMod.config.saveAll();
-            });
+            builder.setSavingRunnable(() -> EnchantedToolTipMod.config.save());
+
             ConfigCategory category = builder.getOrCreateCategory(new TranslatableText("key.enchantedtooltips.config.category.main"));
             ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
             category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.booksenabled"), options.enableForBooks).setDefaultValue(true).setSaveConsumer(val -> options.enableForBooks = val).build());
