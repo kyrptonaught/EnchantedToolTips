@@ -15,7 +15,7 @@ public class EnchantedToolTipMod implements ClientModInitializer {
     public void onInitializeClient() {
         config.registerFile("config.json5", new ConfigOptions());
         config.registerFile("enchants.json5", new CustomEnchantNames());
-        config.loadAll();
+        config.load();
     }
 
     public static HashMap<String, String> getCustomEnchantsNames() {

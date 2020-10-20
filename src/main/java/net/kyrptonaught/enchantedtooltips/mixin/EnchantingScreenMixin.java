@@ -2,38 +2,40 @@ package net.kyrptonaught.enchantedtooltips.mixin;
 
 import net.kyrptonaught.enchantedtooltips.EnchantToolTipHelper;
 import net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod;
-import net.minecraft.client.gui.screen.ingame.ContainerScreen;
-import net.minecraft.client.gui.screen.ingame.EnchantingScreen;
-import net.minecraft.container.EnchantingTableContainer;
+import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.screen.EnchantmentScreenHandler;
+import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Mixin(EnchantingScreen.class)
-public abstract class EnchantingScreenMixin extends ContainerScreen<EnchantingTableContainer> {
-    public EnchantingScreenMixin(EnchantingTableContainer container_1, PlayerInventory playerInventory_1, Text text_1) {
+@Mixin(EnchantmentScreen.class)
+public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScreenHandler> {
+    public EnchantingScreenMixin(EnchantmentScreenHandler container_1, PlayerInventory playerInventory_1, Text text_1) {
         super(container_1, playerInventory_1, text_1);
     }
 
     @Override
-    public void renderTooltip(List<String> list, int int_1, int int_2) {
+    public void renderTooltip(MatrixStack matrices, List<Text> lines, int x, int y) {
         if (EnchantedToolTipMod.getConfig().enableForEnchantTable) {
             ListTag enchants = new ListTag();
-            for (int i = 0; i < this.container.enchantmentId.length; i++) {
-                int power = this.container.enchantmentPower[i];
-                Enchantment enchant = Enchantment.byRawId(this.container.enchantmentId[i]);
-                int level = this.container.enchantmentLevel[i];
-                if (this.isPointWithinBounds(60, 14 + 19 * i, 108, 17, int_1, int_2) && power > 0 && level >= 0 && enchant != null) {
+            for (int i = 0; i < this.handler.enchantmentId.length; i++) {
+                int power = this.handler.enchantmentPower[i];
+                Enchantment enchant = Enchantment.byRawId(this.handler.enchantmentId[i]);
+                int level = this.handler.enchantmentLevel[i];
+                if (this.isPointWithinBounds(60, 14 + 19 * i, 108, 17, x, y) && power > 0 && level >= 0 && enchant != null) {
                     CompoundTag compoundTag = new CompoundTag();
                     compoundTag.putString("id", String.valueOf(Registry.ENCHANTMENT.getId(enchant)));
                     compoundTag.putShort("lvl", (short) level);
@@ -43,18 +45,17 @@ public abstract class EnchantingScreenMixin extends ContainerScreen<EnchantingTa
 
             List<Text> list2 = new ArrayList<>();
             EnchantToolTipHelper.appendToolTip(list2, enchants, false);
-            list.addAll(1, list2.stream().map(Text::asFormattedString).collect(Collectors.toList()));
+            lines.addAll(list2);
         }
-        super.renderTooltip(list, int_1, int_2);
+        super.renderTooltip(matrices,lines, x, y);
+    }
+
+    public void renderTooltip(MatrixStack matrixStack, Text text, int i, int j) {
+        this.renderOrderedTooltip(matrixStack, Arrays.asList(text.asOrderedText()), i, j);
     }
 
     @Override
-    public void renderTooltip(String string_1, int int_1, int int_2) {
-        super.renderTooltip(Collections.singletonList(string_1), int_1, int_2);
-    }
-
-    @Override
-    protected void renderTooltip(ItemStack itemStack_1, int int_1, int int_2) {
-        super.renderTooltip(this.getTooltipFromItem(itemStack_1), int_1, int_2);
+    protected void renderTooltip(MatrixStack matrices, ItemStack itemStack_1, int int_1, int int_2) {
+        super.renderTooltip(matrices,this.getTooltipFromItem(itemStack_1), int_1, int_2);
     }
 }

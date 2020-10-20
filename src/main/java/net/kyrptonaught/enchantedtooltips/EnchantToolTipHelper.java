@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -67,7 +68,7 @@ public class EnchantToolTipHelper {
             }
             //name
             Text lvl = new TranslatableText("enchantment.level." + enchantTag.getInt("lvl"));
-            Text name = new TranslatableText(enchant.getTranslationKey()).append(" ").append(lvl);
+            MutableText name = new TranslatableText(enchant.getTranslationKey()).append(" ").append(lvl);
             list.add(name.formatted(enchant.isCursed() ? Formatting.RED : Formatting.DARK_GREEN));
             //desc
             if (options.displayDescription) {
@@ -75,7 +76,7 @@ public class EnchantToolTipHelper {
             }
             //Level
             if (options.displayMaxLvl) {
-                Text maxLvl = new TranslatableText("enchantment.level." + enchant.getMaximumLevel());
+                Text maxLvl = new TranslatableText("enchantment.level." + enchant.getMaxLevel());
                 list.add(new TranslatableText("enchantedtooltip.enchant.maxLevel").append(maxLvl).formatted(Formatting.WHITE));
             }
             //applies to
