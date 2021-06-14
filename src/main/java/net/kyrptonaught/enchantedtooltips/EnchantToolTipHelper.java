@@ -8,8 +8,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -31,10 +31,10 @@ public class EnchantToolTipHelper {
         modCache.put("biom4st3rmoenchantments", "Mo' Enchantments");
     }
 
-    public static void appendToolTip(List<Text> list, ListTag enchants, boolean isItem, boolean isBook) {
-        ListTag enchantsCopy = enchants.copy();
+    public static void appendToolTip(List<Text> list, NbtList enchants, boolean isItem, boolean isBook) {
+        NbtList enchantsCopy = enchants.copy();
         if (EnchantedToolTipMod.getConfig().sortEnchantInfo)
-            enchantsCopy.sort(Comparator.comparing(enchant -> ((CompoundTag) enchant).getString("id")));
+            enchantsCopy.sort(Comparator.comparing(enchant -> ((NbtCompound) enchant).getString("id")));
         if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) != 0) {
             appendEnchantInfo(list, enchantsCopy, isBook);
         } else {
@@ -51,10 +51,10 @@ public class EnchantToolTipHelper {
     }
 
 
-    private static void appendEnchantInfo(List<Text> list, ListTag enchants, boolean isBook) {
+    private static void appendEnchantInfo(List<Text> list, NbtList enchants, boolean isBook) {
         for (int i = 0; i < enchants.size(); i++) {
             ConfigOptions options = EnchantedToolTipMod.getConfig();
-            CompoundTag enchantTag = enchants.getCompound(i);
+            NbtCompound enchantTag = enchants.getCompound(i);
             Identifier enchantID = Identifier.tryParse(enchantTag.getString("id"));
             if (enchantID == null) continue;
             Enchantment enchant = Registry.ENCHANTMENT.get(enchantID);
