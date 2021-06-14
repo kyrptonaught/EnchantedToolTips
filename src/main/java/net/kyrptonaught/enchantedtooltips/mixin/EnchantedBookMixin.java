@@ -20,6 +20,6 @@ public class EnchantedBookMixin {
         if (MinecraftClient.getInstance().currentScreen == null)
             ItemStack.appendEnchantments(tooltip, enchantments);
         else if (EnchantedToolTipMod.getConfig().enableForBooks)
-            EnchantToolTipHelper.appendToolTip(tooltip, enchantments, true);
+            EnchantToolTipHelper.appendToolTip(tooltip, enchantments, true,true);
     }
 }

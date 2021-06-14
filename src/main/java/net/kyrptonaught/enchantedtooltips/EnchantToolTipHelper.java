@@ -31,12 +31,12 @@ public class EnchantToolTipHelper {
         modCache.put("biom4st3rmoenchantments", "Mo' Enchantments");
     }
 
-    public static void appendToolTip(List<Text> list, ListTag enchants, boolean isItem) {
+    public static void appendToolTip(List<Text> list, ListTag enchants, boolean isItem, boolean isBook) {
         ListTag enchantsCopy = enchants.copy();
         if (EnchantedToolTipMod.getConfig().sortEnchantInfo)
             enchantsCopy.sort(Comparator.comparing(enchant -> ((CompoundTag) enchant).getString("id")));
         if (EnchantedToolTipMod.getConfig().alwaysShowEnchantInfo || GLFW.glfwGetKey(MinecraftClient.getInstance().getWindow().getHandle(), GLFW.GLFW_KEY_LEFT_SHIFT) != 0) {
-            appendEnchantInfo(list, enchantsCopy);
+            appendEnchantInfo(list, enchantsCopy, isBook);
         } else {
             if (isItem)
                 ItemStack.appendEnchantments(list, enchantsCopy);
@@ -51,7 +51,7 @@ public class EnchantToolTipHelper {
     }
 
 
-    private static void appendEnchantInfo(List<Text> list, ListTag enchants) {
+    private static void appendEnchantInfo(List<Text> list, ListTag enchants, boolean isBook) {
         for (int i = 0; i < enchants.size(); i++) {
             ConfigOptions options = EnchantedToolTipMod.getConfig();
             CompoundTag enchantTag = enchants.getCompound(i);
@@ -67,20 +67,28 @@ public class EnchantToolTipHelper {
                 continue;
             }
             //name
-            Text lvl = new TranslatableText("enchantment.level." + enchantTag.getInt("lvl"));
-            MutableText name = new TranslatableText(enchant.getTranslationKey()).append(" ").append(lvl);
-            list.add(name.formatted(enchant.isCursed() ? Formatting.RED : Formatting.DARK_GREEN));
+            MutableText lvl = new TranslatableText("enchantment.level." + enchantTag.getInt("lvl"));
+            MutableText name = new TranslatableText(enchant.getTranslationKey()).append(" ");
+            MutableText title = name.formatted(enchant.isCursed() ? Formatting.RED : Formatting.DARK_GREEN);
+
+            if (options.combineLvlMaxLvl) {
+                Text maxLvl = new TranslatableText("enchantment.level." + enchant.getMaxLevel());
+                lvl.append(new LiteralText("/")).append(maxLvl);
+            }
+            if (enchantTag.getInt("lvl") > 1 || !options.hideLvlI)
+                name.append(lvl);
+            list.add(title);
             //desc
             if (options.displayDescription) {
                 list.add(new LiteralText(" ").append(getEnchantDesc("enchantment." + enchantTag.getString("id").replace(":", ".") + ".desc")).formatted(Formatting.WHITE));
             }
             //Level
-            if (options.displayMaxLvl) {
+            if (options.displayMaxLvl && !options.combineLvlMaxLvl) {
                 Text maxLvl = new TranslatableText("enchantment.level." + enchant.getMaxLevel());
                 list.add(new TranslatableText("enchantedtooltip.enchant.maxLevel").append(maxLvl).formatted(Formatting.WHITE));
             }
             //applies to
-            if (options.displayAppliesTo) {
+            if (options.displayAppliesTo && (!options.appliesToBookOnly || isBook)) {
                 list.add(new TranslatableText("enchantedtooltip.enchant.applicableTo").append(new TranslatableText("enchantedtooltip.enchant.type." + enchant.type.name())).formatted(Formatting.WHITE));
             }
             //from

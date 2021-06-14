@@ -45,9 +45,12 @@ public class ModMenuIntegration implements ModMenuApi {
             category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.sortenchants"), options.sortEnchantInfo).setDefaultValue(false).setSaveConsumer(val -> options.sortEnchantInfo = val).build());
 
             ConfigCategory display = builder.getOrCreateCategory(new TranslatableText("key.enchantedtooltips.config.category.display"));
+            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.hidelvli"), options.hideLvlI).setDefaultValue(false).setSaveConsumer(val -> options.hideLvlI = val).build());
             display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displayapplies"), options.displayAppliesTo).setDefaultValue(true).setSaveConsumer(val -> options.displayAppliesTo = val).build());
+            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.appliesbookonly"), options.appliesToBookOnly).setDefaultValue(false).setSaveConsumer(val -> options.appliesToBookOnly = val).build());
             display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displaydesc"), options.displayDescription).setDefaultValue(true).setSaveConsumer(val -> options.displayDescription = val).build());
             display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displaymaxlvl"), options.displayMaxLvl).setDefaultValue(true).setSaveConsumer(val -> options.displayMaxLvl = val).build());
+            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.comblvlmaxlvl"), options.combineLvlMaxLvl).setDefaultValue(false).setSaveConsumer(val -> options.combineLvlMaxLvl = val).build());
             display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displaymodfrom"), options.displayModFrom).setDefaultValue(true).setSaveConsumer(val -> options.displayModFrom = val).build());
             ConfigCategory enchantCategory = builder.getOrCreateCategory(new TranslatableText("key.enchantedtooltips.config.category.enchants"));
 

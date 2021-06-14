@@ -23,13 +23,20 @@ public class ConfigOptions implements AbstractConfigFile {
     public boolean sortEnchantInfo = false;
 
 
+    @Comment("Hide enchant lvl if only I")
+    public boolean hideLvlI = false;
     @Comment("Display 'Description' in tooltip")
     public boolean displayDescription = true;
     @Comment("Display 'Max level' in tooltip")
     public boolean displayMaxLvl = true;
+    @Comment("Display 'Max level' after title")
+    public boolean combineLvlMaxLvl = false;
     @Comment("Display 'From' in tooltip")
     public boolean displayModFrom = true;
     @Comment("Display 'Applies to' in tooltip")
     public boolean displayAppliesTo = true;
+
+    @Comment("Display 'Applies to' only on books")
+    public boolean appliesToBookOnly = false;
 
 }

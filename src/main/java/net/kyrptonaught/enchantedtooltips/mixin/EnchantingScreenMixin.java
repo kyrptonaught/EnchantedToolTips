@@ -44,7 +44,7 @@ public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScr
             }
 
             List<Text> list2 = new ArrayList<>();
-            EnchantToolTipHelper.appendToolTip(list2, enchants, false);
+            EnchantToolTipHelper.appendToolTip(list2, enchants, false,true);
             lines.addAll(list2);
         }
         super.renderTooltip(matrices,lines, x, y);
