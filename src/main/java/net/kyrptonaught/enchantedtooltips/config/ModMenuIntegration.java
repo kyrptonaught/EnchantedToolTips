@@ -1,6 +1,7 @@
 package net.kyrptonaught.enchantedtooltips.config;
 
-import io.github.prospector.modmenu.api.ModMenuApi;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
@@ -23,11 +24,7 @@ import java.util.function.Supplier;
 public class ModMenuIntegration implements ModMenuApi {
 
     @Override
-    public String getModId() {
-        return EnchantedToolTipMod.MOD_ID;
-    }
-
-    public Function<Screen, ? extends Screen> getConfigScreenFactory() {
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return (screen) -> {
             ConfigOptions options = EnchantedToolTipMod.getConfig();
             ConfigBuilder builder = ConfigBuilder.create().setParentScreen(screen).setTitle(new TranslatableText("Enchanted ToolTips Config"));

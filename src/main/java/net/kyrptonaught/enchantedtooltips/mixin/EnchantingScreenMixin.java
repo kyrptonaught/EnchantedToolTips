@@ -8,8 +8,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
@@ -30,13 +30,13 @@ public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScr
     @Override
     public void renderTooltip(MatrixStack matrices, List<Text> lines, int x, int y) {
         if (EnchantedToolTipMod.getConfig().enableForEnchantTable) {
-            ListTag enchants = new ListTag();
+            NbtList enchants = new NbtList();
             for (int i = 0; i < this.handler.enchantmentId.length; i++) {
                 int power = this.handler.enchantmentPower[i];
                 Enchantment enchant = Enchantment.byRawId(this.handler.enchantmentId[i]);
                 int level = this.handler.enchantmentLevel[i];
                 if (this.isPointWithinBounds(60, 14 + 19 * i, 108, 17, x, y) && power > 0 && level >= 0 && enchant != null) {
-                    CompoundTag compoundTag = new CompoundTag();
+                    NbtCompound compoundTag = new NbtCompound();
                     compoundTag.putString("id", String.valueOf(Registry.ENCHANTMENT.getId(enchant)));
                     compoundTag.putShort("lvl", (short) level);
                     enchants.add(compoundTag);
