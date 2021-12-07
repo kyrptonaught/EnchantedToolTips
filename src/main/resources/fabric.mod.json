@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "enchantedtooltips",
-  "version": "1.3.5-1.17",
+  "version": "1.3.5-1.18",
   "name": "Enchanted ToolTips",
   "description": "Enhanced, enchantment info in Tool Tips",
   "authors": [
@@ -29,9 +29,8 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.11.3",
+    "fabricloader": ">=0.12.6",
     "fabric": "*",
-    "minecraft": "1.17.x",
-    "java": ">=16"
+    "java": ">=17"
   }
 }

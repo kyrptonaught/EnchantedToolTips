@@ -23,9 +23,8 @@ import java.util.function.Supplier;
 @Environment(EnvType.CLIENT)
 public class ModMenuIntegration implements ModMenuApi {
 
-
-@Override
-public ConfigScreenFactory<?> getModConfigScreenFactory() {
+    @Override
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return (screen) -> {
             ConfigOptions options = EnchantedToolTipMod.getConfig();
             ConfigBuilder builder = ConfigBuilder.create().setParentScreen(screen).setTitle(new TranslatableText("Enchanted ToolTips Config"));
