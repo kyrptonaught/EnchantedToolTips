@@ -2,13 +2,13 @@ package net.kyrptonaught.enchantedtooltips.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigCategory;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod;
-import net.minecraft.client.gui.screen.Screen;
+import net.kyrptonaught.kyrptconfig.config.screen.ConfigScreen;
+import net.kyrptonaught.kyrptconfig.config.screen.ConfigSection;
+import net.kyrptonaught.kyrptconfig.config.screen.items.BooleanItem;
+import net.kyrptonaught.kyrptconfig.config.screen.items.TextItem;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -16,9 +16,6 @@ import net.minecraft.util.registry.Registry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
 public class ModMenuIntegration implements ModMenuApi {
@@ -27,41 +24,42 @@ public class ModMenuIntegration implements ModMenuApi {
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return (screen) -> {
             ConfigOptions options = EnchantedToolTipMod.getConfig();
-            ConfigBuilder builder = ConfigBuilder.create().setParentScreen(screen).setTitle(new TranslatableText("Enchanted ToolTips Config"));
-            builder.setSavingRunnable(() -> EnchantedToolTipMod.config.save());
+            ConfigScreen configScreen = new ConfigScreen(screen, new TranslatableText("Enchanted ToolTips Config"));
+            configScreen.setSavingEvent(() -> EnchantedToolTipMod.config.save());
 
-            ConfigCategory category = builder.getOrCreateCategory(new TranslatableText("key.enchantedtooltips.config.category.main"));
-            ConfigEntryBuilder entryBuilder = ConfigEntryBuilder.create();
-            category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.booksenabled"), options.enableForBooks).setDefaultValue(true).setSaveConsumer(val -> options.enableForBooks = val).build());
-            category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.itemsenabled"), options.enableForItems).setDefaultValue(true).setSaveConsumer(val -> options.enableForItems = val).build());
-            category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.tableenabled"), options.enableForEnchantTable).setDefaultValue(true).setSaveConsumer(val -> options.enableForEnchantTable = val).build());
+            ConfigSection mainSection = new ConfigSection(configScreen, new TranslatableText("key.enchantedtooltips.config.category.main"));
 
-            category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.alwaysshow"), options.alwaysShowEnchantInfo).setDefaultValue(false).setSaveConsumer(val -> options.alwaysShowEnchantInfo = val).build());
-            category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displaypress"), options.displayPressForInfo).setDefaultValue(true).setSaveConsumer(val -> options.displayPressForInfo = val).build());
-            category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displaymissing"), options.displayMissingEnchant).setDefaultValue(true).setSaveConsumer(val -> options.displayMissingEnchant = val).build());
-            category.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.sortenchants"), options.sortEnchantInfo).setDefaultValue(false).setSaveConsumer(val -> options.sortEnchantInfo = val).build());
+            mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.booksenabled"), options.enableForBooks, true).setSaveConsumer(val -> options.enableForBooks = val));
+            mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.itemsenabled"), options.enableForItems, true).setSaveConsumer(val -> options.enableForItems = val));
+            mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.tableenabled"), options.enableForEnchantTable, true).setSaveConsumer(val -> options.enableForEnchantTable = val));
 
-            ConfigCategory display = builder.getOrCreateCategory(new TranslatableText("key.enchantedtooltips.config.category.display"));
-            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.hidelvli"), options.hideLvlI).setDefaultValue(false).setSaveConsumer(val -> options.hideLvlI = val).build());
-            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displayapplies"), options.displayAppliesTo).setDefaultValue(true).setSaveConsumer(val -> options.displayAppliesTo = val).build());
-            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.appliesbookonly"), options.appliesToBookOnly).setDefaultValue(false).setSaveConsumer(val -> options.appliesToBookOnly = val).build());
-            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displaydesc"), options.displayDescription).setDefaultValue(true).setSaveConsumer(val -> options.displayDescription = val).build());
-            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displaymaxlvl"), options.displayMaxLvl).setDefaultValue(true).setSaveConsumer(val -> options.displayMaxLvl = val).build());
-            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.comblvlmaxlvl"), options.combineLvlMaxLvl).setDefaultValue(false).setSaveConsumer(val -> options.combineLvlMaxLvl = val).build());
-            display.addEntry(entryBuilder.startBooleanToggle(new TranslatableText("key.enchantedtooltips.config.displaymodfrom"), options.displayModFrom).setDefaultValue(true).setSaveConsumer(val -> options.displayModFrom = val).build());
-            ConfigCategory enchantCategory = builder.getOrCreateCategory(new TranslatableText("key.enchantedtooltips.config.category.enchants"));
+            mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.alwaysshow"), options.alwaysShowEnchantInfo, false).setSaveConsumer(val -> options.alwaysShowEnchantInfo = val));
+            mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.displaypress"), options.displayPressForInfo, true).setSaveConsumer(val -> options.displayPressForInfo = val));
+            mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.displaymissing"), options.displayMissingEnchant, true).setSaveConsumer(val -> options.displayMissingEnchant = val));
+            mainSection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.sortenchants"), options.sortEnchantInfo, false).setSaveConsumer(val -> options.sortEnchantInfo = val));
+
+            ConfigSection displaySection = new ConfigSection(configScreen, new TranslatableText("key.enchantedtooltips.config.category.display"));
+            displaySection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.hidelvli"), options.hideLvlI, false).setSaveConsumer(val -> options.hideLvlI = val));
+            displaySection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.displayapplies"), options.displayAppliesTo, true).setSaveConsumer(val -> options.displayAppliesTo = val));
+            displaySection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.appliesbookonly"), options.appliesToBookOnly, false).setSaveConsumer(val -> options.appliesToBookOnly = val));
+            displaySection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.displaydesc"), options.displayDescription, true).setSaveConsumer(val -> options.displayDescription = val));
+            displaySection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.displaymaxlvl"), options.displayMaxLvl, true).setSaveConsumer(val -> options.displayMaxLvl = val));
+            displaySection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.comblvlmaxlvl"), options.combineLvlMaxLvl, false).setSaveConsumer(val -> options.combineLvlMaxLvl = val));
+            displaySection.addConfigItem(new BooleanItem(new TranslatableText("key.enchantedtooltips.config.displaymodfrom"), options.displayModFrom, true).setSaveConsumer(val -> options.displayModFrom = val));
+
+            ConfigSection enchantSection = new ConfigSection(configScreen, new TranslatableText("key.enchantedtooltips.config.category.enchants"));
 
             List<Identifier> enchants = new ArrayList<>(Registry.ENCHANTMENT.getIds());
             Collections.sort(enchants);
             enchants.forEach(identifier -> {
                 String id = identifier.toString();
                 String enchant = "enchantment." + id.replace(":", ".") + ".desc";
-                enchantCategory.addEntry(entryBuilder.startTextField(new TranslatableText(enchant.substring(12, enchant.length() - 5)), EnchantedToolTipMod.getCustomEnchantsNames().getOrDefault(enchant, "")).setDefaultValue("").setSaveConsumer(val -> {
+                enchantSection.addConfigItem(new TextItem(new TranslatableText(enchant.substring(12, enchant.length() - 5)), EnchantedToolTipMod.getCustomEnchantsNames().getOrDefault(enchant, ""), "").setSaveConsumer(val -> {
                     if (val.equals("")) EnchantedToolTipMod.getCustomEnchantsNames().remove(enchant);
                     else EnchantedToolTipMod.getCustomEnchantsNames().put(enchant, val);
-                }).build());
+                }));
             });
-            return builder.build();
+            return configScreen;
         };
     }
 }

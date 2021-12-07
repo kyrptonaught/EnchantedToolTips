@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class EnchantToolTipHelper {
-    private static HashMap<String, String> modCache = new HashMap<>();
+    private static final HashMap<String, String> modCache = new HashMap<>();
 
     static {
         modCache.put("biom4st3rmoenchantments", "Mo' Enchantments");

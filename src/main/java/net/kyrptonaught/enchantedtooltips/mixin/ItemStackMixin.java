@@ -22,6 +22,6 @@ public class ItemStackMixin {
         if (MinecraftClient.getInstance().currentScreen == null || enchants.size() == 0)
             ItemStack.appendEnchantments(list, enchants);
         else if (EnchantedToolTipMod.getConfig().enableForItems)
-            EnchantToolTipHelper.appendToolTip(list, enchants, true,false);
+            EnchantToolTipHelper.appendToolTip(list, enchants, true, false);
     }
 }

@@ -11,14 +11,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.EnchantmentScreenHandler;
-import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Mixin(EnchantmentScreen.class)
@@ -44,10 +42,10 @@ public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScr
             }
 
             List<Text> list2 = new ArrayList<>();
-            EnchantToolTipHelper.appendToolTip(list2, enchants, false,true);
+            EnchantToolTipHelper.appendToolTip(list2, enchants, false, true);
             lines.addAll(list2);
         }
-        super.renderTooltip(matrices,lines, x, y);
+        super.renderTooltip(matrices, lines, x, y);
     }
 
     public void renderTooltip(MatrixStack matrixStack, Text text, int i, int j) {
@@ -56,6 +54,6 @@ public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScr
 
     @Override
     protected void renderTooltip(MatrixStack matrices, ItemStack itemStack_1, int int_1, int int_2) {
-        super.renderTooltip(matrices,this.getTooltipFromItem(itemStack_1), int_1, int_2);
+        super.renderTooltip(matrices, this.getTooltipFromItem(itemStack_1), int_1, int_2);
     }
 }
