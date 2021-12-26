@@ -91,7 +91,7 @@
   "enchantment.incantationem.magnetic.desc": "Atrae items y orbes de experiencia cerca tuyo. Cada nivel aumenta el radio de atracción.",
   "enchantment.incantationem.recklessness.desc": "Hace que todos los bloques que rompas se destruyan. Puede ser útil en ciertos casos...",
   "enchantment.incantationem.bunnys_hop.desc": "Aumenta tu salto cuando estás sobre bloques de pasto o tierra.",
-  "enchantment.swine_bane.desc": "Aumenta el daño contra cerdos, piglings, hoglins y similares.",
+  "enchantment.incantationem.swine_bane.desc": "Aumenta el daño contra cerdos, piglings, hoglins y similares.",
   "enchantment.incantationem.decay.desc": "Causa daño de wither adicional. Cada nivel aumenta la probabilidad de aplicar este efecto, la duración y la potencia.",
   "enchantment.incantationem.tough_luck.desc": "Disminuye tu suerte mientras tengas el objeto equipado o seleccionado.",
   "enchantment.incantationem.forging_touch.desc": "Tienes una probabilidad de fundir los bloques que rompes. Cada nivel incrementa la probabilidad de fundir.",
