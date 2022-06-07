@@ -23,10 +23,9 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-  modImplementation 'net.kyrptonaught:kyrptconfig:1.4.3-1.18'
-	include 'net.kyrptonaught:kyrptconfig:1.4.3-1.18'
+  modImplementation 'net.kyrptonaught:kyrptconfig:1.4.5-1.18'
+	include 'net.kyrptonaught:kyrptconfig:1.4.5-1.18'
 }
-
 processResources {
 	inputs.property "version", project.version
 
@@ -45,6 +44,6 @@ java {
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_${project.archivesBaseName}" }
 	}
 }
