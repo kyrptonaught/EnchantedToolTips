@@ -10,12 +10,13 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.config.Registry;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Comparator;
@@ -55,7 +56,7 @@ public class EnchantToolTipHelper {
             NbtCompound enchantTag = enchants.getCompound(i);
             Identifier enchantID = Identifier.tryParse(enchantTag.getString("id"));
             if (enchantID == null) continue;
-            Enchantment enchant = Registry.ENCHANTMENT.get(enchantID);
+            Enchantment enchant = Registries.ENCHANTMENT.get(enchantID);
             if (enchant == null) {
                 if (options.displayMissingEnchant) {
                     list.add(Text.literal(enchantTag.getString("id")).formatted(Formatting.GOLD));

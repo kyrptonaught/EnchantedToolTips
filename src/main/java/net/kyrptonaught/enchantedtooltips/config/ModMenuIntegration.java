@@ -9,9 +9,9 @@ import net.kyrptonaught.kyrptconfig.config.screen.ConfigScreen;
 import net.kyrptonaught.kyrptconfig.config.screen.ConfigSection;
 import net.kyrptonaught.kyrptconfig.config.screen.items.BooleanItem;
 import net.kyrptonaught.kyrptconfig.config.screen.items.TextItem;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +49,7 @@ public class ModMenuIntegration implements ModMenuApi {
 
             ConfigSection enchantSection = new ConfigSection(configScreen, Text.translatable("key.enchantedtooltips.config.category.enchants"));
 
-            List<Identifier> enchants = new ArrayList<>(Registry.ENCHANTMENT.getIds());
+            List<Identifier> enchants = new ArrayList<>(Registries.ENCHANTMENT.getIds());
             Collections.sort(enchants);
             enchants.forEach(identifier -> {
                 String id = identifier.toString();

@@ -10,9 +10,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.Registries;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.text.Text;
-import net.minecraft.util.registry.Registry;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScr
                 int level = this.handler.enchantmentLevel[i];
                 if (this.isPointWithinBounds(60, 14 + 19 * i, 108, 17, x, y) && power > 0 && level >= 0 && enchant != null) {
                     NbtCompound compoundTag = new NbtCompound();
-                    compoundTag.putString("id", String.valueOf(Registry.ENCHANTMENT.getId(enchant)));
+                    compoundTag.putString("id", String.valueOf(Registries.ENCHANTMENT.getId(enchant)));
                     compoundTag.putShort("lvl", (short) level);
                     enchants.add(compoundTag);
                 }
