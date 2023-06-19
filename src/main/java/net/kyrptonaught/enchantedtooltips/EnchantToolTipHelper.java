@@ -88,8 +88,8 @@ public class EnchantToolTipHelper {
             }
             //applies to
             if (options.displayAppliesTo && (!options.appliesToBookOnly || isBook)) {
-                if (enchant.type != null)
-                    list.add(Text.translatable("enchantedtooltip.enchant.applicableTo").append(Text.translatable("enchantedtooltip.enchant.type." + enchant.type.name())).formatted(Formatting.WHITE));
+                if (enchant.target != null)
+                    list.add(Text.translatable("enchantedtooltip.enchant.applicableTo").append(Text.translatable("enchantedtooltip.enchant.type." + enchant.target.name())).formatted(Formatting.WHITE));
             }
             //from
             if (options.displayModFrom) {

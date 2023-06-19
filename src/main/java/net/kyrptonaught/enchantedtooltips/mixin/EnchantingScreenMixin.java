@@ -2,6 +2,7 @@ package net.kyrptonaught.enchantedtooltips.mixin;
 
 import net.kyrptonaught.enchantedtooltips.EnchantToolTipHelper;
 import net.kyrptonaught.enchantedtooltips.EnchantedToolTipMod;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,7 +14,12 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.registry.Registries;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.text.Text;
+import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,15 +31,15 @@ public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScr
         super(container_1, playerInventory_1, text_1);
     }
 
-    @Override
-    public void renderTooltip(MatrixStack matrices, List<Text> lines, int x, int y) {
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTooltip(Lnet/minecraft/client/font/TextRenderer;Ljava/util/List;II)V"), locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void addToolTipInfo(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci, boolean bl, int ii, int jj, int kk, Enchantment enchantment, int ll, int mm, List<Text> list) {
         if (EnchantedToolTipMod.getConfig().enableForEnchantTable) {
             NbtList enchants = new NbtList();
             for (int i = 0; i < this.handler.enchantmentId.length; i++) {
                 int power = this.handler.enchantmentPower[i];
                 Enchantment enchant = Enchantment.byRawId(this.handler.enchantmentId[i]);
                 int level = this.handler.enchantmentLevel[i];
-                if (this.isPointWithinBounds(60, 14 + 19 * i, 108, 17, x, y) && power > 0 && level >= 0 && enchant != null) {
+                if (this.isPointWithinBounds(60, 14 + 19 * i, 108, 17, mouseX, mouseY) && power > 0 && level >= 0 && enchant != null) {
                     NbtCompound compoundTag = new NbtCompound();
                     compoundTag.putString("id", String.valueOf(Registries.ENCHANTMENT.getId(enchant)));
                     compoundTag.putShort("lvl", (short) level);
@@ -41,19 +47,8 @@ public abstract class EnchantingScreenMixin extends HandledScreen<EnchantmentScr
                 }
             }
 
-            List<Text> list2 = new ArrayList<>();
-            EnchantToolTipHelper.appendToolTip(list2, enchants, false, true);
-            lines.addAll(list2);
+            //List<Text> list2 = new ArrayList<>();
+            EnchantToolTipHelper.appendToolTip(list, enchants, false, true);
         }
-        super.renderTooltip(matrices, lines, x, y);
-    }
-
-    public void renderTooltip(MatrixStack matrixStack, Text text, int i, int j) {
-        this.renderOrderedTooltip(matrixStack, Arrays.asList(text.asOrderedText()), i, j);
-    }
-
-    @Override
-    protected void renderTooltip(MatrixStack matrices, ItemStack itemStack_1, int int_1, int int_2) {
-        super.renderTooltip(matrices, this.getTooltipFromItem(itemStack_1), int_1, int_2);
     }
 }
